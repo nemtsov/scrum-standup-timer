@@ -1,5 +1,7 @@
 var gulp = require('gulp'),
-  sass = require('gulp-sass');
+  gutil = require('gulp-util'),
+  sass = require('gulp-sass'),
+  livereload = require('gulp-livereload');
 
 exports.toCss = sassToCss;
 exports.toCssWatch = sassToCssWatch;
@@ -7,9 +9,13 @@ exports.toCssWatch = sassToCssWatch;
 function sassToCss() {
   return gulp.src('./lib/components/App/App.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./dist'));
+    .on('error', gutil.log.bind(gutil, 'SASS Error'))
+    .pipe(gulp.dest('./dist'))
+    .pipe(livereload());
 }
 
 function sassToCssWatch() {
+  livereload.listen();
+  sassToCss();
   return gulp.watch('./lib/components/**/*.scss', sassToCss);
 }

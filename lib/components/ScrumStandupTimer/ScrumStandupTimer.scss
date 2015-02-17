@@ -1,0 +1,48 @@
+.ScrumStandupTimer {
+  font-size: 500%;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .question, .bottom {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .question {
+    padding: 1em;
+  }
+
+  .bottom {
+    background-color: #f8f8f8;
+
+    .countdown {
+      width: 2em;
+    }
+
+    .alert_1 { color: #BB0000; }
+    .alert_2 { color: #FF0000; }
+    .alert_3 {
+      color: red;
+      font-weight: 600;
+    }
+
+    .next {
+      margin-left: 2em;
+
+      button {
+        padding: 0.3em 1em;
+        border: 1px solid #eee;
+        color: #aaa;
+        background-color: white;
+        border-radius: 10px;
+      }
+    }
+  }
+}

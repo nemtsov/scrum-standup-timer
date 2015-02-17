@@ -2,6 +2,7 @@
 /* global window, document */
 
 var React = require('react'),
+  ScrumStandupTimer = require('../ScrumStandupTimer/ScrumStandupTimer.jsx'),
   App;
 
 module.exports = App = React.createClass({
@@ -15,15 +16,11 @@ module.exports = App = React.createClass({
         <head>
           <title>{this.state.title}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="stylesheet" type="text/css"
-            href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
           <link rel="stylesheet" type="text/css" href="/assets/App.css" />
         </head>
 
         <body>
-          <div className="container">
-            <p>Hello world!</p>
-          </div>
+          <ScrumStandupTimer />
 
           <script src="/assets/App.js" type="text/javascript"></script>
           <script type="text/javascript" dangerouslySetInnerHTML={{

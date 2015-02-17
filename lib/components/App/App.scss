@@ -1,3 +1,7 @@
-body {
-  background-color: #f7f7f7;
+@import './styles/normalize.scss';
+
+html,body {
+  height: 100%;
 }
+
+@import '../ScrumStandupTimer/ScrumStandupTimer.scss';
