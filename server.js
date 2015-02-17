@@ -1,6 +1,7 @@
 require('node-jsx').install({extension: '.jsx'});
 
 var express = require('express'),
+  compression = require('compression'),
   disableHttpCache = require('connect-cache-control'),
   morgan = require('morgan'),
   serveStatic = require('serve-static'),
@@ -12,6 +13,7 @@ var express = require('express'),
 // utility middleware
 app.use(disableHttpCache);
 app.use(morgan(IS_PROD ? 'combined' : 'dev'));
+app.use(compression());
 app.use('/favicon.ico', require('./lib/resources/favicon'));
 app.use('/_health', require('./lib/resources/_health'));
 
