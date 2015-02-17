@@ -1,35 +1,47 @@
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
+  buffer = require('gulp-buffer'),
   source = require('vinyl-source-stream'),
   watchify = require('watchify'),
-  browserify = require('browserify');
+  browserify = require('browserify'),
+  uglify = require('gulp-uglify');
 
-exports.toJs = jsxToJs.bind(null, createBundler());
-exports.toJsWatch = jsxToJs.bind(null, createBundler(true));
-
-function jsxToJs(bundler) {
-  return bundler.bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('App.js'))
+exports.toJs = function () {
+  return createStream(createBundler(false))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
-}
+};
+
+exports.toJsWatch = function () {
+  var bundler = createBundler(true);
+
+  function createBundlerStream() {
+    return createStream(bundler)
+      .pipe(gulp.dest('./dist'));
+  }
+
+  bundler = watchify(bundler);
+  bundler.on('update', createBundlerStream);
+  bundler.on('time', function (time) {
+    console.log('App.js built in: %dms', time);
+  });
+
+  return createBundlerStream();
+};
 
 function createBundler(isDebug) {
-  var bundler = browserify('./lib/components/App/App.jsx', {
+  return browserify('./lib/components/App/App.jsx', {
     cache: {},
     packageCache: {},
     fullPaths: true,
     transform: ['reactify'],
     debug: isDebug
   });
+}
 
-  if (isDebug) {
-    bundler = watchify(bundler);
-    bundler.on('update', jsxToJs.bind(null, bundler));
-    bundler.on('time', function (time) {
-      console.log('App.js built in: %dms', time);
-    });
-  }
-
-  return bundler;
+function createStream(bundler) {
+  return bundler.bundle()
+    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .pipe(source('App.js'));
 }
