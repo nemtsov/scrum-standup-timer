@@ -18,6 +18,7 @@ app.use('/favicon.ico', require('./lib/resources/favicon'));
 app.use('/_health', require('./lib/resources/_health'));
 
 // app resources
+app.use('/resources', serveStatic(__dirname + '/lib/resources'));
 app.use('/assets', serveStatic(__dirname + '/dist'));
 app.use('/', require('./lib/resources/pages'));
 app.use(errors.middleware.errorHandler);
