@@ -29,6 +29,11 @@ module.exports = ScrumStandupTimer = React.createClass({
 
   componentDidMount: function(){
     hotkey.activate();
+    this.resetTimer();
+  },
+
+  resetTimer: function() {
+    clearInterval(this.timer);
     this.timer = setInterval(this.tick, INTERVAL_INCREMENT);
   },
 
@@ -65,6 +70,7 @@ module.exports = ScrumStandupTimer = React.createClass({
 
   onNext: function () {
     var index = (this.state.questionIndex + 1) % 3;
+    this.resetTimer();
     this.setState({
       countdown: COUNTDOWN_IN_MS,
       alertState: 0,
