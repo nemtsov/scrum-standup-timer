@@ -20,7 +20,7 @@ module.exports = App = React.createClass({
         </head>
 
         <body>
-          <ScrumStandupTimer />
+          <ScrumStandupTimer airhorn={true} />
 
           <script src="/assets/App.js" type="text/javascript"></script>
           <script type="text/javascript" dangerouslySetInnerHTML={{

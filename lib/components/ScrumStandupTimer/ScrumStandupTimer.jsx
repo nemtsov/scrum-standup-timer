@@ -15,6 +15,10 @@ var React = require('react'),
 module.exports = ScrumStandupTimer = React.createClass({
   mixins: [hotkey.Mixin('onHotKey')],
 
+  propTypes: {
+    airhorn: React.PropTypes.bool
+  },
+
   getInitialState: function () {
     return {
       countdown: COUNTDOWN_IN_MS,
@@ -32,6 +36,12 @@ module.exports = ScrumStandupTimer = React.createClass({
     clearInterval(this.timer);
   },
 
+  airhornAlert: function() {
+    if (this.props.airhorn) {
+      (new window.Audio('/resources/airhorn.mp3')).play();
+    }
+  },
+
   tick: function () {
     var countdown = this.state.countdown - INTERVAL_INCREMENT,
       alertState = this.state.alertState;
@@ -39,6 +49,7 @@ module.exports = ScrumStandupTimer = React.createClass({
     if (countdown <= 0) {
       alertState = 3;
       clearInterval(this.timer);
+      this.airhornAlert();
       countdown = 0;
     } else if (countdown <= 5000) {
       alertState = 2;
